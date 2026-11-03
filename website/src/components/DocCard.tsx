@@ -6,6 +6,8 @@ export function DocCard({ doc }: { doc: Doc }) {
   return (
     <a
       href={docHref(doc.rel)}
+      target="_blank"
+      rel="noreferrer"
       className="group flex items-start gap-4 rounded-lg border bg-card p-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
     >
       <span className="clip-bevel flex h-10 w-10 shrink-0 items-center justify-center bg-brand text-primary-foreground">

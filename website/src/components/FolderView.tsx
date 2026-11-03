@@ -46,7 +46,12 @@ export function FolderView({ folder }: { folder: Folder }) {
           ))}
           {folder.docs.map((d) => (
             <li key={d.path}>
-              <a href={docHref(d.rel)} className="flex items-center gap-3 px-4 py-3 hover:bg-muted">
+              <a
+                href={docHref(d.rel)}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 px-4 py-3 hover:bg-muted"
+              >
                 <FileText className="h-5 w-5 text-muted-foreground" />
                 <span className="flex-1 truncate">{d.title}</span>
                 <span className="text-xs text-muted-foreground">{d.date ? formatDate(d.date) : ""}</span>
