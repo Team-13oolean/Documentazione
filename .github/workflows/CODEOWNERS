@@ -1,0 +1,7 @@
+# CODEOWNERS - gruppo13oolean-dev
+# Posizione: .github/CODEOWNERS sul branch main
+#
+# Ogni modifica al repository richiede l'approvazione del team "responsabili".
+# A ogni rotazione dei ruoli si aggiorna la composizione del team, non questo file.
+
+*   @gruppo13oolean-dev/responsabili
