@@ -1,0 +1,90 @@
+\section{Processi di Supporto}
+\subsection{Documentazione}
+Il processo di documentazione si occupa di definire le regole, strumenti e ciclo di vita per la produzione, la revisione, l'approvazione e la pubblicazione della documentazione. Inoltre tutta la documentazione prodotta, sia di tipo interna che di tipo esterna, dovrà seguire il relativo template.
+La documentazione deve essere:
+\begin{itemize}
+	\item Coerente con le Norme di progetto;
+	\item Verificabile tramite Pull Request;
+	\item Tracciabile rispetto alla modifiche effettuate;
+	\item Consultabile nella repository e sito;
+\end{itemize}
+\subsection{Tipologia Documentazione}
+\subsubsection{Documentazione interna}
+\begin{itemize}
+	\item \textbf{Norme di Progetto};
+	\item \textbf{Glossario};
+	\item \textbf{Verbali interni};
+\end{itemize}
+
+\subsubsection{Documentazione esterna}
+\begin{itemize}
+	\item \textbf{Verbali Esterni};
+	\item \textbf{Diario di Bordo};
+\end{itemize}
+
+\subsection{Strumenti per la Documentazione}
+La documentazione deve essere prodotta in {\LaTeX} tramite l'ausilio dei seguenti strumenti:
+\begin{itemize}
+	\item VSCode con il plugin {\LaTeX} Workshop
+	\item Il plugin {LTeX+} per VSCode per lo spell check;
+\end{itemize}
+Per quanto riguarda invece la documentazione che deve essere prodotta per il Diario di Bordo il gruppo utilizza PowerPoint con il relativo template.
+
+\subsection{Nomi e convenzioni}
+\begin{itemize}
+	\item Le \textbf{date} dovranno essere indicate sempre con il formato AAAA-MM-GG (formato ISO 8601) al fine di non risultare ambigue. Questo formato deve essere rispettato anche all'interno dei nomi del file, poiché garantisce l'ordinamento cronologico automatico all'interno della repository.
+	\item I \textbf{nomi dei file} dovranno essere tutti in minuscolo utilizzando come separatore il carattere \_ (underscore). Inoltre il nome di ogni file deve essere coerente con il documento prodotto. Se il nome contiene una data questa deve essere separata dal \_ rispetto al nome e inserita nel formatto AAAA-MM-DD. \\
+	Ad esempio: \texttt{verbale\_interno\_2026-10-15}
+\end{itemize}
+
+\subsection{Fasi di vita di un documento}
+\begin{itemize}
+	\item \textbf{Redazione}: Questa fase costituisce la fase iniziale di stesura del documento, questa può essere gestita da uno o più autori a seconda della divisione dei compiti. In questa fase devono essere registrate tutte le modifiche tramite il sistema di versionamento (sezione ~\ref{versionamento})
+	\item \textbf{Verifica}: Quando la bozza di un documento viene terminata esso viene verificato dal verificatore. Un documento acquisisce lo stato di verificato quando soddisfa i seguenti requisiti:
+	\begin{itemize}
+		\item Coerente con lo stile dell'altra documentazione;
+		\item Scritto in maniera formale e corretta sintatticamente;
+		\item I contenuti sono coerenti e corretti;
+	\end{itemize}
+	\item \textbf{Approvazione}: Dopo aver superato la fase di verifica i documenti che sono pronti per l'approvazione passano al controllo del responsabile, che ne verifica che rispetti i requisiti di completezza e correttezza necessari affinché esso diventi pubblico.
+	\item \textbf{Pubblicazione}: Dopo l'approvazione il documento viene caricato nella repository e tramite il sistema di automazione viene compilato in PDF.
+\end{itemize}
+
+\subsection{Struttura dei documenti}
+Ogni documento prodotto dal gruppo dovrà avere la seguente struttura:
+\begin{itemize}
+	\item Copertina, con titolo del documento e data;
+	\item Registro delle modifiche posto prima dell'indice contenente i verificatori e le approvazioni del responsabile;
+	\item Indice;
+	\item Corpo del documento;
+\end{itemize} 
+
+\subsection{Versionamento}
+\label{versionamento}
+Tutti i documenti, a eccezione della \textit{Lettera di Presentazione} sono dotate di una versione nel formato X.Y.Z e una registro delle modifiche. La prima stesura di un documento deve iniziare sempre dalla versione 0.1. Successivamente a seguito delle modifiche si procede aumentando Y o Z:
+\begin{itemize}
+	\item In caso di piccole modifiche o correzioni si procede aumentando Z
+	\item In caso aggiunte o grosse modifiche si incrementa Y
+	\item L'incrementa di X procede ad azzerare Y e Z, questo avviene soltanto quando il documento viene approvato per il rilascio da parte del responsabile, che dovrà indicarlo all'interno del registro delle modifiche indicando con la dicitura "Approvazione del documento"
+	\item Ogni successiva modifica procederà nuovamente ad aumentare Y e Z. Mentre X verrà nuovamente incrementato solo alla successiva approvazione del documento da parte del responsabile
+\end{itemize}
+
+\subsection{Verbali}
+I verbali hanno lo scopo di descrivere in maniera accurata lo svolgimento di un incontro, permettendo di tracciare in maniera ufficiale le decisioni prese. Nel caso dei verbali esterni essi dovranno riportare anche la firma del responsabile e del referente aziendale. Inoltre nei verbali si deve adottare la seguente struttura per i codici di decisioni e task:
+\begin{itemize}
+	\item Le decisioni sono indicate nella forma: DEC-X.Y, dove X prende il numero del verbale e Y viene incrementato a ogni nuova decisione creata.
+	\item Allo stesso modo le task sono indicate nella forma: T-X.Y, dove X prende il numero del verbale e Y viene incrementato a ogni nuova task creata.
+\end{itemize}
+
+\subsection{Gestione della configurazione}
+Il gruppo utilizza GitHub per la gestione di tutta la documentazione pubblica, pertanto nessun membro deve lavorare sul main. 
+\begin{itemize}
+	\item Quando un documento deve essere scritto viene aperta la issue e assegnata al membro del gruppo;
+	\item L'assegnatario della issue si occuperà di creare un branch sul quale lavora alla sua bozza;
+	\item Quando la sua bozza è pronta procede a creare una pull Request, indicando anche la issue, che dovrà essere verificata dal verificatore;
+	\item Se la bozza necessita di modifiche il verificatore procedere a segnalarle nella pull request. Successivamente l'assegnatario le effettua e dopo il commit richiede un ulteriore verifica del verificatore.
+	\item In caso di esito positivo della verifica si passa ad attendere l'approvazione del responsabile che si occuperà di procedere con il merge nel main.
+	\item Al termine del merge l'assegnatario deve assicurarsi di cancellare il branch creato in precedenza.
+\end{itemize}
+
+Struttura dei commit 
