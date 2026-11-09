@@ -34,9 +34,9 @@
 # minted
 _minted-*/
 
-# Output (togliete queste righe se volete il PDF nel repo)
+# Output delle build locali (i PDF ufficiali stanno in output/, generati dalla CI)
 *.pdf
-!figures/**/*.pdf
+!output/**/*.pdf
 build/
 
 # Sistema
