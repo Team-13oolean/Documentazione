@@ -1,14 +1,18 @@
 import { FileText } from "lucide-react";
 import type { Doc } from "@/lib/docs";
 import { docHref, formatDate } from "@/lib/docs";
+import { cn } from "@/lib/utils";
 
-export function DocCard({ doc }: { doc: Doc }) {
+export function DocCard({ doc, className }: { doc: Doc; className?: string }) {
   return (
     <a
       href={docHref(doc.rel)}
       target="_blank"
       rel="noreferrer"
-      className="group flex items-start gap-4 rounded-lg border bg-card p-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
+      className={cn(
+        "group flex items-start gap-4 rounded-lg border bg-card p-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/50",
+        className,
+      )}
     >
       <span className="clip-bevel flex h-10 w-10 shrink-0 items-center justify-center bg-brand text-primary-foreground">
         <FileText className="h-5 w-5" />

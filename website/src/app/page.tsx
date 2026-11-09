@@ -17,7 +17,9 @@ export const metadata: Metadata = {
 
 export default async function Index() {
   const data = await listDocs();
-  const latest = data.docs.slice(0, 4);
+  const featured = data.docs.filter(
+    (d) => d.categories[0]?.toLowerCase() === "candidatura" || d.rel.toLowerCase().startsWith("candidatura/"),
+  );
   const links = [
     { icon: FileText, label: "Tutti i documenti", desc: `${data.docs.length} PDF disponibili`, to: "/documenti" as const },
     { icon: Users, label: "Membri del gruppo", desc: "Chi siamo", to: "/membri" as const },
@@ -71,11 +73,17 @@ export default async function Index() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pt-14">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Ultimi documenti</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+          DOCUMENTI IN EVIDENZA - CANDIDATURA
+        </h2>
         {data.error && <p className="mt-4 text-sm text-destructive">{data.error}</p>}
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {latest.map((d) => (
-            <DocCard key={d.path} doc={d} />
+          {featured.map((d) => (
+            <DocCard
+              key={d.path}
+              doc={d}
+              className="sm:last:odd:col-span-2 sm:last:odd:mx-auto sm:last:odd:w-[calc(50%-0.375rem)]"
+            />
           ))}
         </div>
       </section>

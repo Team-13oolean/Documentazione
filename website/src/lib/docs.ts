@@ -42,7 +42,7 @@ export function toDoc(path: string, size: number, root: string): Doc | null {
 
 export function formatDate(d: string) {
   const [y, m, day] = d.split("-");
-  return `${day}/${m}/${y}`;
+  return `${y}/${m}/${day}`;
 }
 
 export function sortDocs(docs: Doc[]) {
