@@ -102,4 +102,48 @@ Il gruppo utilizza GitHub per la gestione di tutta la documentazione pubblica. I
 	\item Al termine del merge l'assegnatario deve assicurarsi di cancellare il branch creato in precedenza.
 \end{itemize}
 
-Struttura dei commit 
+\subsection{Struttura dei commit}\label{sec:commit}
+I messaggi di commit seguono la specifica \textit{Conventional Commits 1.0.0},
+adattata alle esigenze del gruppo. Ogni messaggio deve avere la seguente
+struttura:
+\begin{center}
+  \texttt{<tipo>(<ambito>): <descrizione>}
+\end{center}
+dove:
+\begin{itemize}
+  \item \textbf{tipo}: indica la natura della modifica e deve essere uno
+        dei valori elencati di seguito;
+  \item \textbf{ambito}: indica il documento o la parte del repository
+        interessata, scritto in minuscolo con il carattere \texttt{\_} come
+        separatore, coerentemente con la sezione
+        \hyperref[sec:nomi]{\textit{Nomi e convenzioni}}
+        (ad esempio \texttt{norme\_progetto}, \texttt{glossario});
+  \item \textbf{descrizione}: breve sintesi della modifica, in italiano,
+        con l'iniziale minuscola, senza punto finale e di lunghezza non
+        superiore a 72 caratteri.
+\end{itemize}
+
+I tipi ammessi sono:
+\begin{itemize}
+  \item \texttt{docs}: stesura o modifica del contenuto di un documento;
+  \item \texttt{fix}: correzione di errori, refusi o incoerenze;
+  \item \texttt{style}: modifiche alla sola formattazione, senza alterare
+        il contenuto;
+  \item \texttt{feat}: aggiunta di nuove funzionalità al codice del PoC;
+  \item \texttt{refactor}: riorganizzazione di codice o documenti senza
+        modificarne il significato;
+  \item \texttt{ci}: modifiche al sistema di automazione e compilazione;
+  \item \texttt{chore}: attività di manutenzione che non rientrano nei
+        tipi precedenti (ad esempio aggiornamento del template o della
+        struttura delle cartelle).
+\end{itemize}
+
+Quando il commit è legato a una issue, il suo numero deve essere indicato
+in coda alla descrizione, nella forma \texttt{(\#N)}.
+
+Ad esempio:
+\begin{itemize}
+  \item \texttt{docs(norme\_progetto): aggiungi sezione sui ruoli (\#12)};
+  \item \texttt{fix(verbale\_interno): correggi data dell'incontro};
+  \item \texttt{ci: aggiungi compilazione automatica dei PDF}.
+\end{itemize}
