@@ -1,0 +1,205 @@
+% ============================================================
+% CONFIGURAZIONE
+% ============================================================
+
+\documentclass[a4paper,12pt]{article}
+
+% Pacchetti
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{calc}
+\usepackage[hidelinks]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage[normalem]{ulem}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{tikz}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{titlesec}
+\usepackage{eurosym}
+
+% Percorsi delle immaginiABC.tex
+\graphicspath{{immagini/}{../../../shared}}
+
+% Informazioni del documento
+\newcommand{\nomedocumento}{Glossario}
+\newcommand{\versionedocumento}{0.0.0}
+\newcommand{\datadocumento}{2026-11-08}
+
+% Impostazioni dei collegamenti
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Impostazioni dell'intestazione e del piè di pagina
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{13oolean}
+\fancyhead[R]{\nomedocumento}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Impostazioni dei titoli
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection}
+{1em}
+{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection}
+{1em}
+{}
+
+% ============================================================
+% INIZIO DOCUMENTO
+% ============================================================
+
+\begin{document}
+
+% ============================================================
+% COPERTINA
+% ============================================================
+
+\begin{titlepage}
+    \centering
+
+    \vspace*{2cm}
+
+    
+    \includegraphics[width=0.4\textwidth]{logo_unipd.png}
+    \includegraphics[width=0.7\textwidth]{logo.png}
+
+    \vspace{2cm}
+
+    {\Large Università degli Studi di Padova\par}
+
+    \vspace{2cm}
+
+    {\Huge\bfseries Glossario\par}
+
+    \vspace{1cm}
+
+    {\Large Gruppo 13oolean\par}
+
+    \vfill
+
+    \begin{tabular}{ll}
+        \textbf{Versione:} & \versionedocumento \\
+        \textbf{Data:} & \datadocumento
+    \end{tabular}
+
+    \vspace{2cm}
+
+\end{titlepage}
+
+% ============================================================
+% INFORMAZIONI SUL DOCUMENTO
+% ============================================================
+
+\thispagestyle{empty}
+
+\begin{center}
+    {\Large\bfseries Informazioni sul documento}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+    \begin{tabularx}{\textwidth}{|>{\bfseries}l|X|}
+        \hline
+        Titolo & Glossario \\
+        \hline
+        Versione & \versionedocumento \\
+        \hline
+        Data di redazione & \datadocumento \\
+        \hline
+        Redazione & Giacomo Lazzarotto \\
+        \hline
+        Verifica & Andrea Guerra \\
+        \hline
+        Responsabile & Michele Tosato \\
+        \hline
+        Uso & Interno \\
+        \hline
+        Destinatari & Gruppo 13oolean\newline
+        Tullio Vardanega\newline
+        Riccardo Cardin \\
+        \hline
+    \end{tabularx}
+\end{center}
+
+\newpage
+
+% ============================================================
+% REGISTRO DELLE MODIFICHE
+% ============================================================
+
+\input{contenuti/registro_modifiche.tex}
+
+\newpage
+
+% ============================================================
+% INDICE
+% ============================================================
+
+\tableofcontents
+
+\newpage
+
+% ============================================================
+% INTRODUZIONE
+% ============================================================
+
+\section{Introduzione}
+
+\subsection{Obiettivo del documento}
+
+Il presente documento ha lo scopo di raccogliere e descrivere i termini
+tecnici, specialistici e potenzialmente ambigui utilizzati nella
+documentazione relativa al progetto del gruppo 13oolean.
+
+Il glossario fornisce una definizione condivisa dei termini utilizzati,
+con l'obiettivo di favorire una comprensione uniforme da parte di tutti
+i componenti del gruppo e dei destinatari della documentazione.
+
+I termini riportati nel documento sono organizzati in ordine alfabetico,
+per facilitarne la consultazione.
+
+\subsection{Struttura del documento}
+
+Il documento è suddiviso in sezioni organizzate secondo l'ordine
+alfabetico.
+
+Ogni voce del glossario riporta il termine di riferimento e la relativa
+definizione.
+
+I termini presenti nella documentazione sono evidenziati in corsivo
+e contrassegnati con il pedice G alla loro prima occorrenza in ciascuna
+sezione, così da indicare la presenza della relativa definizione
+all'interno del glossario.
+
+\newpage
+
+% ============================================================
+% TERMINI DEL GLOSSARIO
+% ============================================================
+
+\input{contenuti/termini.tex}
+
+\end{document}
