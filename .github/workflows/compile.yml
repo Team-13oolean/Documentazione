@@ -14,6 +14,8 @@ on:
 
 permissions:
   contents: write
+  # Serve solo per il commento con i link ai PDF nelle pull request.
+  pull-requests: write
 
 # Annulla le esecuzioni ancora in corso sullo stesso ref quando ne viene avviata una nuova.
 concurrency:
@@ -176,11 +178,133 @@ jobs:
 
       - name: Caricamento dell'anteprima PDF
         if: steps.detect.outputs.count != '0'
+        id: anteprima
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.nome.outputs.nome }}
           path: ${{ runner.temp }}/anteprima
           if-no-files-found: ignore
+
+      # ---------------------------------------------------------------------------
+      # Passi eseguiti solo nelle pull request. Sono indipendenti dalla compilazione:
+      # se falliscono, la compilazione e l'esito del workflow non cambiano
+      # (continue-on-error) e non toccano mai i file che finiscono su main.
+      # ---------------------------------------------------------------------------
+
+      - name: Generazione dei PDF con le differenze (solo PR)
+        if: github.event_name == 'pull_request' && steps.detect.outputs.count != '0'
+        continue-on-error: true
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+
+          # Versione di main da cui parte la PR, estratta in una cartella esterna al repository.
+          git worktree add --detach "$RUNNER_TEMP/base" "$BASE_SHA"
+          mkdir -p "$RUNNER_TEMP/differenze"
+
+          cat > "$RUNNER_TEMP/differenze.sh" <<'EOF'
+          set -uo pipefail
+
+          # Per ogni documento compilato in questa esecuzione genera un PDF che evidenzia
+          # le modifiche rispetto a main. Un errore su un documento non blocca gli altri.
+          while IFS= read -r -d '' tex; do
+            dir=$(dirname "$tex")
+            file=$(basename "$tex")
+            name="${file%.tex}"
+            rel="${dir#src}"; rel="${rel#/}"
+            diff="${name}-differenze"
+
+            if [ ! -f "/base/$tex" ]; then
+              echo "[NUOVO] $tex: non esiste su main, nessun confronto."
+              continue
+            fi
+
+            # --flatten include nel confronto anche i file richiamati con \input e \include.
+            if ! (cd "/work/$dir" && latexdiff --flatten "/base/$tex" "$file" > "${diff}.tex" 2> /tmp/latexdiff.log); then
+              echo "[SALTATO] $tex: latexdiff non è riuscito."
+              cat /tmp/latexdiff.log
+              continue
+            fi
+
+            # -f produce comunque il PDF in presenza di errori non bloccanti dovuti al markup delle differenze.
+            (cd "/work/$dir" && latexmk -pdf -f -interaction=nonstopmode -silent "${diff}.tex") > /tmp/latexmk.log 2>&1 || true
+
+            if [ -f "/work/$dir/${diff}.pdf" ]; then
+              mkdir -p "/differenze/${rel}"
+              cp "/work/$dir/${diff}.pdf" "/differenze/${rel}/"
+              echo "[OK] $tex -> ${diff}.pdf"
+            else
+              echo "[SALTATO] $tex: il PDF delle differenze non è stato generato."
+              tail -n 25 /tmp/latexmk.log
+            fi
+          done < /work/roots.list
+          EOF
+
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            -e HOME=/tmp \
+            -v "$PWD":/work \
+            -v "$RUNNER_TEMP/base":/base:ro \
+            -v "$RUNNER_TEMP/differenze.sh":/differenze.sh:ro \
+            -v "$RUNNER_TEMP/differenze":/differenze \
+            -w /work \
+            texlive/texlive:latest \
+            bash /differenze.sh
+
+      - name: Caricamento dei PDF con le differenze (solo PR)
+        if: github.event_name == 'pull_request' && steps.detect.outputs.count != '0'
+        id: differenze
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: differenze-${{ steps.nome.outputs.nome }}
+          path: ${{ runner.temp }}/differenze
+          if-no-files-found: ignore
+
+      - name: Commento con i link ai PDF (solo PR)
+        if: github.event_name == 'pull_request' && steps.detect.outputs.count != '0'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          URL_PDF: ${{ steps.anteprima.outputs.artifact-url }}
+          URL_DIFF: ${{ steps.differenze.outputs.artifact-url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          marker='<!-- anteprima-pdf -->'
+
+          {
+            echo "$marker"
+            echo "### Anteprima della documentazione"
+            echo
+            echo "Documenti compilati:"
+            tr '\0' '\n' < roots.list | sed 's/^/- `/; s/$/`/'
+            echo
+            if [ -n "$URL_PDF" ]; then
+              echo "- [Scarica i PDF compilati]($URL_PDF)"
+            fi
+            if [ -n "$URL_DIFF" ]; then
+              echo "- [Scarica i PDF con le modifiche evidenziate rispetto a main]($URL_DIFF)"
+            else
+              echo "- PDF delle modifiche non disponibili (documenti nuovi o confronto non riuscito)"
+            fi
+            echo
+            echo "<sub>Aggiornato al commit ${HEAD_SHA::7} · [dettagli dell'esecuzione]($RUN_URL)</sub>"
+          } > "$RUNNER_TEMP/commento.md"
+
+          # Aggiorna il commento già presente invece di aggiungerne uno nuovo a ogni push.
+          id=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id" | tail -n 1)
+
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -F body=@"$RUNNER_TEMP/commento.md" > /dev/null
+          else
+            gh pr comment "$PR" --repo "$REPO" --body-file "$RUNNER_TEMP/commento.md"
+          fi
 
       - name: Commit e push dei PDF (solo su main)
         if: steps.detect.outputs.count != '0' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
