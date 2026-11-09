@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isAllowedPath, resolveDocPdfPath, toDoc } from "@/lib/docs";
+import { formatDate, isAllowedPath, resolveDocPdfPath, toDoc } from "@/lib/docs";
 
 describe("docs", () => {
   it("only accepts PDFs under output/", () => {
@@ -10,6 +10,8 @@ describe("docs", () => {
     const d = toDoc("output/Verbali/Verbali interni/verbale_interno_2026-10-15/verbale_interno_2026-10-15.pdf", 1, "output")!;
     expect(d.category).toBe("Verbali / Verbali interni");
     expect(d.date).toBe("2026-10-15");
+    expect(d.title).toBe("Verbale interno 2026/10/15");
+    expect(formatDate(d.date!)).toBe("2026/10/15");
   });
   it("pdf proxy rejects paths outside output/", () => {
     expect(isAllowedPath("output/../secret.pdf")).toBe(false);
