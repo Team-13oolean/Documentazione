@@ -14,6 +14,8 @@ on:
 
 permissions:
   contents: write
+  # Serve per scrivere nella PR il commento con il link all'anteprima PDF.
+  pull-requests: write
 
 # Annulla le esecuzioni ancora in corso sullo stesso ref quando ne viene avviata una nuova.
 concurrency:
@@ -176,11 +178,40 @@ jobs:
 
       - name: Caricamento dell'anteprima PDF
         if: steps.detect.outputs.count != '0'
+        id: anteprima
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.nome.outputs.nome }}
           path: ${{ runner.temp }}/anteprima
           if-no-files-found: ignore
+
+      # Solo nelle PR: scrive (o aggiorna) un commento con il link all'anteprima.
+      # Se fallisce non blocca il workflow.
+      - name: Link all'anteprima nella pull request
+        if: github.event_name == 'pull_request' && steps.anteprima.outputs.artifact-url != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          URL: ${{ steps.anteprima.outputs.artifact-url }}
+        run: |
+          marker='<!-- anteprima-pdf -->'
+          body="$marker
+          **Anteprima PDF**: [scarica i documenti compilati]($URL)
+
+          <sub>Aggiornato al commit ${HEAD_SHA::7}</sub>"
+
+          # Aggiorna il commento esistente invece di aggiungerne uno a ogni push.
+          id=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id" | tail -n 1)
+
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -f body="$body" > /dev/null
+          else
+            gh pr comment "$PR" --repo "$REPO" --body "$body"
+          fi
 
       - name: Commit e push dei PDF (solo su main)
         if: steps.detect.outputs.count != '0' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
