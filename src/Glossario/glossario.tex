@@ -1,0 +1,127 @@
+\documentclass[a4paper,11pt]{article}
+
+% ------------------------------------------------------------
+% PACCHETTI
+% ------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[table]{xcolor} % carica anche colortbl
+\usepackage[hidelinks]{hyperref} % indice cliccabile (lasciarlo per ultimo)
+
+% Cartella delle immagini condivise (percorso relativo a glossario.tex)
+\graphicspath{{../shared/}}
+
+% ------------------------------------------------------------
+% DATI DA PERSONALIZZARE
+% ------------------------------------------------------------
+\newcommand{\nomegruppo}{13oolean}
+\newcommand{\emailgruppo}{gruppo13oolean@gmail.com}
+\newcommand{\titolodoc}{Glossario}
+
+% ------------------------------------------------------------
+% INTESTAZIONE E PIÈ DI PAGINA
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{\nomegruppo}}
+\fancyhead[R]{\titolodoc}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+	% ------------------------------------------------------------
+	% COPERTINA
+	% ------------------------------------------------------------
+	\newgeometry{top=2cm, bottom=3cm, left=3cm, right=3cm}
+	\begin{titlepage}
+		\centering
+		
+		\includegraphics[width=0.6\textwidth]{logo_unipd.png}\par
+		\vspace{0.5cm}
+		
+		% --- DIPARTIMENTO E CORSO ---
+		{\fontsize{14}{17}\selectfont LAUREA TRIENNALE IN INFORMATICA\par}
+		\vspace{0.4cm}
+		{\fontsize{14}{17}\selectfont CORSO DI INGEGNERIA DEL SOFTWARE\par}
+		\vspace{0.4cm}
+		{\fontsize{14}{17}\selectfont ANNO ACCADEMICO 2026/2027\par}
+		\vspace{0.8cm}
+		
+		\includegraphics[width=0.5\textwidth]{logo_gruppo.jpeg}\par
+		\vspace{0.5cm}
+		
+		% --- GRUPPO ---
+		{\fontsize{16}{19}\selectfont GRUPPO: \nomegruppo\par}
+		\vspace{0.4cm}
+		{\fontsize{16}{19}\selectfont EMAIL: \href{mailto:\emailgruppo}{\emailgruppo}\par}
+		
+		\vfill
+		
+		% --- TIPO DI DOCUMENTO ---
+		{\fontsize{20}{24}\selectfont \textbf{\titolodoc}\par}
+		
+		\vspace{1cm}
+	\end{titlepage}
+	\restoregeometry
+
+	% ------------------------------------------------------------
+	% REGISTRO DELLE MODIFICHE
+	% ------------------------------------------------------------
+	\input{contenuti/registro_modifiche.tex}
+	\clearpage
+
+	% ------------------------------------------------------------
+	% INDICE
+	% ------------------------------------------------------------
+	\tableofcontents
+	\clearpage
+
+	% ------------------------------------------------------------
+	% INTRODUZIONE
+	% ------------------------------------------------------------
+	\section{Introduzione}
+
+	\subsection{Obiettivo del documento}
+
+	Il presente documento ha lo scopo di raccogliere e descrivere i termini
+	tecnici, specialistici e potenzialmente ambigui utilizzati nella
+	documentazione relativa al progetto del gruppo 13oolean.
+
+	Il glossario fornisce una definizione condivisa dei termini utilizzati,
+	con l'obiettivo di favorire una comprensione uniforme da parte di tutti
+	i componenti del gruppo e dei destinatari della documentazione.
+
+	I termini riportati nel documento sono organizzati in ordine alfabetico,
+	per facilitarne la consultazione.
+
+	\subsection{Struttura del documento}
+
+	Il documento è suddiviso in sezioni organizzate secondo l'ordine
+	alfabetico.
+
+	Ogni voce del glossario riporta il termine di riferimento e la relativa
+	definizione.
+
+	I termini presenti nella documentazione sono evidenziati in corsivo
+	e contrassegnati con il pedice G alla loro prima occorrenza in ciascuna
+	sezione, così da indicare la presenza della relativa definizione
+	all'interno del glossario.
+
+	\clearpage
+
+	% ------------------------------------------------------------
+	% TERMINI DEL GLOSSARIO
+	% ------------------------------------------------------------
+	\input{contenuti/termini.tex}
+
+\end{document}
