@@ -5,8 +5,6 @@
 \documentclass[a4paper,12pt]{article}
 
 % Pacchetti
-\usepackage{fancyhdr}
-\setlength{\headheight}{15pt}
 \usepackage[italian]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -14,7 +12,7 @@
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{calc}
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
 \usepackage[table]{xcolor}
 \usepackage{colortbl}
 \usepackage[normalem]{ulem}
@@ -28,8 +26,10 @@
 \usepackage{titlesec}
 \usepackage{eurosym}
 
-% Percorsi delle immaginiABC.tex
-\graphicspath{{immagini/}{../shared}}
+\setlength{\headheight}{15pt}
+
+% Percorsi delle immagini
+\graphicspath{{immagini/}{../shared/}}
 
 % Informazioni del documento
 \newcommand{\nomedocumento}{Glossario}
@@ -81,7 +81,6 @@
 
     \vspace*{2cm}
 
-    
     \includegraphics[width=0.4\textwidth]{logo_unipd.png}
     \includegraphics[width=0.7\textwidth]{logo.png}
 
