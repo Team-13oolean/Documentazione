@@ -1,0 +1,199 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- CODIFICA, LINGUA E TIPOGRAFIA ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage{microtype} 
+
+% --- GEOMETRIA E LAYOUT ---
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=15pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+
+% --- COLLEGAMENTI E METADATI PDF ---
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue!70!black,
+    citecolor=black,
+    pdftitle={Verbale Interno N. 5 - 13oolean},
+    pdfauthor={13oolean}
+]{hyperref}
+
+% --- DEFINIZIONE METADATI E COMANDI RIUTILIZZABILI ---
+\newcommand{\GroupName}{13oolean}
+\newcommand{\GroupEmail}{\href{mailto:gruppo13oolean@gmail.com}{gruppo13oolean@gmail.com}}
+\newcommand{\DocTitle}{Verbale Riunione Interna \#5}
+\newcommand{\DocDate}{2026-11-04}
+
+% --- CONFIGURAZIONE INTESTAZIONI E PIÈ DI PAGINA ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{\GroupName}}
+\chead{\DocTitle}
+\rhead{\DocDate}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ==============================================================================
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% FRONTESPIZIO
+% ------------------------------------------------------------------------------
+\begin{titlepage}
+    \centering
+    
+    \includegraphics[width=0.45\textwidth]{../../../shared/logo_unipd.png}\par
+    \vspace{0.8cm}
+    
+    {\scshape\large Università degli Studi di Padova\par}
+    {\large Corso di Laurea Triennale in Informatica\par}
+    {\large Corso di Ingegneria del Software -- A.A. 2026/2027\par}
+    
+    \vspace{1cm}
+    \includegraphics[width=0.35\textwidth]{../../../shared/logo_gruppo.jpeg}\par
+    \vspace{0.8cm}
+
+    {\large Gruppo: \textbf{\GroupName}\par}
+    {\large Email: \GroupEmail\par}
+
+    \vfill
+
+    {\Huge\bfseries \DocTitle\par}
+    \vspace{0.3cm}
+    {\large Data: \DocDate\par}
+    
+    \vspace{1.5cm}
+\end{titlepage}
+
+% ------------------------------------------------------------------------------
+% INDICE E INIZIO CONTENUTO
+% ------------------------------------------------------------------------------
+\pagenumbering{Roman} % Numerazione romana per le sezioni iniziali
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic} % Numerazione araba per il contenuto effettivo
+
+\section{Informazioni Generali}
+\begin{itemize}
+    \item \textbf{Luogo / Piattaforma:} Server Discord
+    \item \textbf{Data:} \DocDate
+    \item \textbf{Orario:} 15:30 -- 17:50
+    \item \textbf{Responsabile:} Michele Tosato
+    \item \textbf{Verificatore:} Andrea Guerra
+    \item \textbf{Scriba:} Davide Menegaldo
+    \item \textbf{Partecipanti:}
+        \begin{itemize}
+            \item Andrea Guerra
+            \item Francesco Cirigliano
+            \item Gabriele Maria D'Amico
+            \item Giacomo Lazzarotto
+            \item Davide Menegaldo
+            \item Michele Tosato
+        \end{itemize}
+\end{itemize}
+\clearpage
+
+
+\section{Ordine del Giorno}
+\begin{enumerate}
+    \item Analisi dell'esito della candidatura e attuazione delle osservazioni del docente.
+    \item Definizione dei criteri di accettazione per le Pull Request e standardizzazione dei commit.
+    \item Configurazione delle label per le issue su GitHub.
+    \item Organizzazione degli strumenti di gestione per la rotazione ruoli (Google Sheets) e lo scadenziario (Google Calendar).
+    \item Pianificazione delle attività verso la baseline RTB: \textit{Glossario}, \textit{Analisi dei Requisiti} e \textit{Norme di Progetto}.
+\end{enumerate}
+
+
+\section{Resoconto della Riunione}
+
+\subsection{Attuazioni a seguito dell'esito della candidatura}
+A seguito dell'assegnazione ufficiale del capitolato C0, il gruppo ha preso in esame i riscontri forniti dal docente e ha definito i seguenti interventi correttivi:
+\begin{itemize}
+    \item Aggiornamento del logo dell'Università di Padova con il nuovo sigillo istituzionale su tutti i documenti e aggiornamento del template documentale;
+    \item Revisione dei verbali pregressi, inserimento di un solo verificatore, correzione del versionamento e aggiornamento dei nomi dei file;
+    \item Impostazione del formato data \texttt{AAAA-MM-DD} su tutti i documenti di progetto;
+    \item Riorganizzazione della home page del sito web con apertura dei documenti in una nuova scheda e introduzione della sezione per i documenti in evidenza.
+\end{itemize}
+
+\subsection{Definizione criteri di accettazione delle PR e standardizzazione dei commit}
+Al fine di consolidare il flusso di lavoro sul repository, sono stati formalizzati i criteri di accettazione per la chiusura delle Pull Request, per i quali si fa riferimento al documento \textit{Norme di Progetto}.
+È stata inoltre concordata la struttura standardizzata dei commit e stabilita la cancellazione dei branch di lavoro a seguito del merge.
+
+\subsection{Configurazione delle label per le issue}
+Per categorizzare le issue nel repository GitHub, il gruppo ha deciso di introdurre le label suddivise nella seguente maniera: \texttt{Priority:\ High}, \texttt{Medium}, \texttt{Low}; \texttt{ Type:\ Code}, \texttt{Documentation}, \texttt{Web}; \texttt{ Fix}.
+
+\subsection{Strumenti di gestione: rotazione ruoli e scadenziario}
+Per pianificare e monitorare la rotazione dei ruoli e la rendicontazione oraria individuale, il gruppo ha approvato l'adozione di un foglio di calcolo condiviso su Google Sheets. È stato inoltre integrato Google Calendar per la gestione delle scadenze e delle pianificazioni. Il gruppo si riserva di valutare anche altri strumenti e un'eventuale futura integrazione.
+
+\subsection{Pianificazione delle attività verso la baseline RTB}
+In vista della preparazione della milestone RTB, il gruppo ha definito i compiti propedeutici per i documenti cardine:
+\begin{itemize}
+    \item \textit{Glossario};
+    \item Stesura del documento e formalizzazione delle metodologie di lavoro per le \textit{Norme di Progetto};
+    \item Studio individuale approfondito del capitolato C0 per redigere una bozza iniziale dell'\textit{Analisi dei Requisiti}, compito affidato a tutti i componenti in vista della riunione del 2026-11-09.
+\end{itemize}
+
+
+\clearpage
+\section{Decisioni Prese}
+
+\begin{table}[htbp]
+\centering
+\caption{Riepilogo delle decisioni assunte durante la riunione}
+\label{tab:decisioni}
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Codice} & \textbf{Decisione} \\
+\midrule
+DEC-5.1 & Stesura del verbale della riunione interna del 2026-11-04. \\
+DEC-5.2 & Redazione e aggiornamento del \textit{Diario di Bordo}. \\
+DEC-5.3 & Introduzione delle label per il tracciamento e la priorità delle issue su GitHub. \\
+DEC-5.4 & Revisione e correzione dei verbali pregressi. \\
+DEC-5.5 & Riorganizzazione della home page del sito web e adozione del formato data \texttt{AAAA-MM-DD}. \\
+DEC-5.6 & Stesura del verbale della riunione interna del 2026-10-28. \\
+DEC-5.7 & Redazione del \textit{Glossario}. \\
+DEC-5.8 & Stesura del template e delle metodologie di lavoro per le \textit{Norme di Progetto}. \\
+DEC-5.9 & Stesura di una prima bozza dell'\textit{Analisi dei Requisiti}. \\ 
+DEC-5.10 & Approvazione dei criteri di accettazione per le Pull Request. \\
+DEC-5.11 & Adozione di una struttura standardizzata per i commit e chiusura dei branch post-merge. \\
+DEC-5.12 & Adozione di Google Sheets per la rotazione dei ruoli e di Google Calendar per lo scadenziario. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Azioni da Svolgere}
+
+\begin{table}[htbp]
+\centering
+\caption{Elenco delle azioni e task assegnati}
+\label{tab:azioni}
+\begin{tabularx}{\textwidth}{l l X l c}
+\toprule
+\textbf{Codice} & \textbf{Rif.} & \textbf{Descrizione Task} & \textbf{Assegnatario} & \textbf{Scadenza} \\
+\midrule
+T-5.1 & DEC-5.1 & Stesura verbale riunione 2026-11-04 & Davide & 2026-11-06 \\
+T-5.2 & DEC-5.2 & Redazione del \textit{Diario di Bordo} & Michele & 2026-11-06 \\
+T-5.3 & DEC-5.3 & Aggiunta delle label alle issue su GitHub & Andrea & 2026-11-06 \\
+T-5.4 & DEC-5.4 & Correzione dei verbali pregressi & Francesco & 2026-11-06 \\
+T-5.5 & DEC-5.5 & Riorganizzazione home page del sito e formato date & Gabriele & 2026-11-06 \\
+T-5.6 & DEC-5.6 & Stesura verbale riunione 2026-10-28 & Giacomo & 2026-11-06 \\
+T-5.7 & DEC-5.7 & Redazione del \textit{Glossario} & Giacomo & 2026-11-09 \\
+T-5.8 & DEC-5.8 & Stesura template delle \textit{Norme di Progetto} & Francesco & 2026-11-09 \\
+T-5.9 & DEC-5.9 & Redazione di una bozza dell'\textit{Analisi dei Requisiti} & Tutti & 2026-11-09 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+
+\end{document}
