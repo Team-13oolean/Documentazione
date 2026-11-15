@@ -1,0 +1,78 @@
+\documentclass[a4paper,11pt]{article}
+
+% ------------------------------------------------------------
+% PACCHETTI
+% ------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[table]{xcolor} % carica anche colortbl
+\usepackage[hidelinks]{hyperref} % indice cliccabile (lasciarlo per ultimo)
+
+% Cartella delle immagini condivise (percorso relativo a analisi_dei_requisiti.tex)
+\graphicspath{{../shared/}}
+
+% ------------------------------------------------------------
+% DATI DA PERSONALIZZARE
+% ------------------------------------------------------------
+\newcommand{\nomegruppo}{13oolean}
+\newcommand{\emailgruppo}{gruppo13oolean@gmail.com}
+\newcommand{\titolodoc}{Analisi dei Requisiti}
+\newcommand{\data}{2026-11-14}
+
+% ------------------------------------------------------------
+% INTESTAZIONE E PIÈ DI PAGINA
+% ------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{\nomegruppo}}
+\fancyhead[C]{\titolodoc}
+\fancyhead[R]{\data}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+	% ------------------------------------------------------------
+	% COPERTINA
+	% ------------------------------------------------------------
+	\input{chapter/intestazione}
+
+	% ------------------------------------------------------------
+	% REGISTRO DELLE MODIFICHE
+	% ------------------------------------------------------------
+	\input{chapter/registro_modifiche}
+	\clearpage
+
+	% ------------------------------------------------------------
+	% INDICE
+	% ------------------------------------------------------------
+	\tableofcontents
+	\clearpage
+
+	% ------------------------------------------------------------
+	% CORPO DEL DOCUMENTO
+	% ------------------------------------------------------------
+	\input{chapter/introduzione}
+	\clearpage
+	\input{chapter/descrizione_generale}
+	\clearpage
+	\input{chapter/casi_uso}
+	\clearpage
+	\input{chapter/requisiti}
+	\clearpage
+	\input{chapter/tracciamento}
+	\clearpage
+	\input{chapter/riepilogo}
+
+\end{document}
+
