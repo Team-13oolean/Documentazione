@@ -69,7 +69,7 @@ INTESTAZIONE_TXT = """\
 """
 
 MACRO = r"""
-% --- Aggiunto in CI da .github/scripts/marca_glossario.py ---
+% --- Aggiunto in CI da .github/scripts/glossario.py ---
 \providecommand{\urlglossario}{URL_GLOSSARIO}
 \providecommand{\termine}[2]{\href{\urlglossario\#nameddest=glo:#1}{#2}\textsubscript{G}}
 """
