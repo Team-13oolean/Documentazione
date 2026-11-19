@@ -1,0 +1,73 @@
+\section{Descrizione Generale}
+\label{sec:descrizione}
+
+\subsection{Obiettivo del prodotto}
+Il prodotto prevede la realizzazione di un sistema che monitora in modo continuo canali esterni, come caselle di posta elettronica e canali di messaggistica, e per ogni richiesta ricevuta ne estrae il contenuto, ne decodifica l'intenzione e avvia le azioni configurate verso gli applicativi aziendali di destinazione. L'obiettivo è eliminare i passaggi manuali su informazioni disperse in strumenti disorganizzati, centralizzando i dati e riducendo i tempi di lavorazione.
+
+La \textit{proponente}\textsubscript{G} ha indicato di concentrare le risorse sul perimetro della prima versione (\textit{MVP}\textsubscript{G}), definito come segue:
+	\begin{itemize}
+		\item canali di ingresso: e-mail (testo e allegati PDF e immagini) e messaggi vocali WhatsApp, di durata nell'ordine dei secondi; i canali filesystem, le fotografie e i meeting sono secondari e fuori dall'MVP;
+		\item intenzione: priorità assoluta alla gestione degli ordini d'acquisto \textit{B2B}\textsubscript{G} (codici articolo, quantità, dati cliente e di spedizione), elaborando una sola intenzione principale per messaggio o documento e tracciando nei \textit{log}\textsubscript{G} le informazioni secondarie o escluse;
+		\item validazione: non è prevista una validazione o correzione manuale prima dell'invio ai gestionali; le richieste incerte o con dati insufficienti sono marcate come non riuscite e registrate nei log, consultabili tramite la \textit{dashboard}\textsubscript{G} di monitoraggio;
+		\item priorità: l'affidabilità del processo prevale sulla velocità di esecuzione.
+	\end{itemize}
+Nella classificazione dei \textit{requisiti}\textsubscript{G} i requisiti obbligatori coincidono con il perimetro dell'MVP, mentre le funzionalità secondarie sono classificate come desiderabili od opzionali.
+
+\subsection{Funzioni del prodotto}
+Le funzionalità principali del sistema si dividono nelle seguenti aree:
+	\begin{itemize}
+		\item \textbf{Acquisizione dai canali}: monitoraggio continuo di e-mail e WhatsApp, con rilevamento del mittente, del testo e lettura degli allegati; il monitoraggio di cartelle filesystem è desiderabile (VE-1.1, LG-1.1).
+		\item \textbf{Filtro di sicurezza in ingresso}: identificazione del mittente tramite \textit{anagrafica}\textsubscript{G}, blocco dei \textit{tenant}\textsubscript{G} non autenticati o non autorizzati, separazione dei dati, filtro anti-\textit{spam}\textsubscript{G}, scarto dei duplicati e \textit{anonimizzazione}\textsubscript{G} (VE-1.4, LG-3.1).
+		\item \textbf{Estrazione multimodale}: trascrizione \textit{speech-to-text}\textsubscript{G}, \textit{OCR}\textsubscript{G} e lettura dei PDF, con raffinamento tramite \textit{LLM}\textsubscript{G} e valutazione dell'affidabilità rispetto a una \textit{soglia di confidenza}\textsubscript{G} (VE-1.2, LG-4.2).
+		\item \textbf{Elaborazione semantica}: individuazione dell'intenzione principale, estrazione delle entità dell'ordine e strutturazione in template \textit{JSON}\textsubscript{G}, con gestione di informazioni mancanti e discrepanze tra testo e allegati (VE-1.3, VE-1.7, LG-1.2).
+		\item \textbf{Azioni e integrazione}: chiamate \textit{API REST}\textsubscript{G} verso i software aziendali e invio automatico di e-mail secondo regole configurabili; gestione delle richieste non riuscite (VE-1.6, LG-2.3, LG-4.1).
+		\item \textbf{Persistenza e tracciamento}: salvataggio di testo estratto, \textit{payload}\textsubscript{G} e stato delle richieste in un \textit{database relazionale}\textsubscript{G}, \textit{cifratura}\textsubscript{G} degli allegati salvati e storico dei log (VE-1.12, LG-3.2).
+		\item \textbf{Interfaccia amministrativa}: configurazione di canali, regole e parametri, gestione degli \textit{utenti}\textsubscript{G} con profili di accesso distinti, consultazione dei log e delle richieste tramite dashboard di monitoraggio (LG-3.3, LG-4.2).
+		\item \textbf{Funzionalità opzionali}: coda di revisione umana, dashboard analitica, risposte autonome al mittente e gestione dei meeting (VE-1.6, VE-1.10).
+	\end{itemize}
+
+\subsection{Caratteristiche degli utenti}
+	\begin{itemize}
+		\item \textbf{Mittente}: cliente B2B che invia richieste in forma non strutturata, spesso con descrizioni informali, abbreviazioni o codici incompleti. Non utilizza direttamente il sistema.
+		\item \textbf{Amministratore}: utente dell'interfaccia amministrativa responsabile della configurazione del sistema, degli utenti e dei profili di accesso.
+		\item \textbf{Gestore}: utente dell'interfaccia amministrativa che gestisce le regole operative e le richieste elaborate.
+		\item \textbf{Utente in sola lettura}: utente che può solo consultare le informazioni, come richieste, log e dashboard.
+	\end{itemize}
+Non sono richieste competenze di intelligenza artificiale: gli utenti dell'interfaccia hanno conoscenze di base dei processi aziendali (ordini, anagrafica clienti) e dei canali di ingresso configurati.
+
+\subsection{Piattaforma di esecuzione}
+Il motore di elaborazione è un servizio lato server, eseguibile su infrastruttura dell'azienda insieme ai modelli LLM a pesi aperti eseguiti in locale (VE-1.8, LG-2.1). L'interfaccia amministrativa è un'applicazione web accessibile tramite browser su sistemi operativi desktop. La persistenza avviene su un database relazionale interno e le integrazioni con i software aziendali avvengono tramite \textit{API}\textsubscript{G} REST. Non è previsto supporto nativo per dispositivi mobile.
+
+\subsection{Vincoli generali}
+	\begin{itemize}
+		\item \textbf{Vincoli tecnologici e architetturali}:
+			\begin{itemize}
+				\item il motore di elaborazione è basato su Java con \textit{framework}\textsubscript{G} \textit{Spring Boot}\textsubscript{G} e l'interfaccia amministrativa su \textit{Angular}\textsubscript{G} e \textit{TypeScript}\textsubscript{G}; l'uso di Next.js non è ammesso (VE-1.11);
+				\item il motore adotta una \textit{pipeline}\textsubscript{G} modulare \textit{event-driven}\textsubscript{G} con \textit{scheduler}\textsubscript{G} real-time multi-canale, orchestrando i modelli tramite \textit{LangChain4j}\textsubscript{G} (LG-2.1);
+				\item l'interazione con i modelli avviene tramite interfaccia basata su standard Open API, compatibile con le API di OpenAI, così da poter sostituire a caldo il modello senza modificare la logica applicativa (VE-1.8, LG-2.2);
+				\item il template JSON è a discrezione del gruppo ma estende le API fornite per i software aziendali (VE-1.3);
+				\item la persistenza interna avviene su database relazionale, con SQLite, MariaDB o PostgreSQL consigliati.
+			\end{itemize}
+		\item \textbf{Vincoli di qualità}:
+			\begin{itemize}
+				\item copertura di \textit{test}\textsubscript{G} di unità e di integrazione dell'intera pipeline, per verificarne l'affidabilità ed evitare regressioni (LG-5.1);
+				\item scalabilità valutata sulla gestione asincrona di circa cento richieste concorrenti, con tempi di elaborazione anche lunghi (VE-1.9);
+				\item conformità al \textit{GDPR}\textsubscript{G} secondo i principi di security by default e by design (LG-3);
+				\item configurazioni esternalizzate per parametri applicativi, canali e regole di notifica.
+			\end{itemize}
+		\item \textbf{Vincoli di strumento e rilascio}:
+			\begin{itemize}
+				\item il codice è consegnato in formato sorgente tramite sistema di versionamento (GitHub o Bitbucket), insieme a diagrammi \textit{UML}\textsubscript{G} dei \textit{casi d'uso}\textsubscript{G}, schema della base dati o delle API richiamate, documentazione dei casi di test con reportistica e lista dei bug risolti.
+			\end{itemize}
+	\end{itemize}
+
+\subsection{Assunzioni e dipendenze}
+	\begin{itemize}
+		\item La proponente fornisce \textit{mock}\textsubscript{G} e API dedicate per i software aziendali (tra cui i sistemi \textit{CRM}\textsubscript{G}) e un \textit{dataset}\textsubscript{G} MOCK composto da e-mail, PDF ed esempi testuali, come ordini e risposte JSON (VE-1.1, LG-5.2).
+		\item La proponente fornisce l'anagrafica clienti pre-censita, aggiornata tramite \textit{batch}\textsubscript{G}, usata per validare i dati e identificare chi effettua il contatto; l'accesso ai dati aziendali è quindi parziale (VE-1.5, LG-3.1). Si assume che l'anagrafica riporti per ogni cliente gli identificativi di contatto (e-mail e telefono) e lo stato di abilitazione.
+		\item Il sistema non verifica l'esistenza degli articoli richiesti: il controllo spetta al software aziendale (VE-1.5).
+		\item Il gruppo produce autonomamente le registrazioni audio per WhatsApp, simulando contesti d'uso in mobilità con rumori di fondo (LG-5.2).
+		\item Il funzionamento delle fasi basate su LLM dipende dalla disponibilità di un modello a pesi aperti eseguito in locale e raggiungibile tramite interfaccia compatibile con le API di OpenAI.
+		\item La definizione del template JSON e la gestione dei casi borderline e delle anomalie sono lasciate alla discrezione del gruppo (VE-1.3, VE-1.6).
+		\item Si assume la seguente gerarchia dei profili: l'Amministratore dispone di tutte le funzionalità del Gestore, che a sua volta dispone di quelle dell'Utente in sola lettura.
+	\end{itemize}
