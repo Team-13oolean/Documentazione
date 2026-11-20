@@ -1,0 +1,115 @@
+# Termini del glossario, uno per riga, generati da glossario.py a partire dal Glossario.
+# I nomi vengono aggiornati in automatico: non modificarli qui, ma nel Glossario.
+# Dopo "|" si possono aggiungere a mano le altre forme da cercare nel testo,
+# separate da virgole (ad esempio: Requisito | requisiti).
+Agile
+AIRA
+Anagrafica
+Analisi dei Requisiti
+Analisi dei Rischi
+Angular
+Anonimizzazione
+API
+API REST
+Artefatto
+Attore
+B2B
+Backend
+Backlog
+Baseline
+Batch
+Branch
+Bug
+Capitolato
+Caso d'Uso
+CI/CD
+Cifratura
+Commit
+Committente
+Consuntivo
+Contingenza
+Conventional Commits
+Copertura dei Test (Code Coverage)
+CRM
+Daily Stand-up
+Dashboard
+Database relazionale
+Dataset
+Dato non strutturato
+DBMS
+Debito Tecnico
+Deployment
+Diario di Bordo
+DoD
+Endpoint
+ERP
+Errore
+Euristiche
+Event-driven
+Feature
+Framework
+Frontend
+GDPR
+Git
+GitHub
+GitHub Actions
+Issue
+Iterazione
+JSON
+LangChain4j
+LLM
+Log
+Manutenibilità
+Metriche
+Milestone
+Mock
+Mockup
+Modello a pesi aperti
+Multimodalità
+MVP
+OCR
+Payload
+PB
+Piano di Progetto
+Piano di Qualifica
+Pipeline
+PoC
+Proponente
+Pull Request
+Pull Request Review
+Qualità del Software
+Redattore
+Repository
+Requisito
+Responsabile
+Revisione
+Rischio
+RTB
+Scheduler
+Scrum
+SMTP
+Soglia di confidenza
+Spam
+Speech-to-text
+Spring Boot
+Sprint
+Sprint Backlog
+Sprint Planning
+Sprint Retrospective
+Sprint Review
+Stakeholder
+Tailoring
+Task
+Template
+Tenant
+Test
+Tracciabilità
+TypeScript
+UML
+Usabilità
+Utente
+Validazione
+Verifica
+Verificatore
+Versionamento
+WoW
