@@ -4,14 +4,12 @@ on:
   push:
     paths:
       - 'src/**'
-      - '.github/scripts/**'
       - '.github/workflows/compile.yml'
   pull_request:
     branches:
       - main
     paths:
       - 'src/**'
-      - '.github/scripts/**'
   workflow_dispatch:
 
 permissions:
@@ -76,11 +74,6 @@ jobs:
             changed=$(git diff --name-only "$range") || compile_all=true
             # Una modifica al workflow richiede la ricompilazione completa.
             if grep -q '^\.github/workflows/' <<<"$changed"; then compile_all=true; fi
-            # Anche le modifiche ai termini del glossario (o allo script che li marca)
-            # riguardano tutti i documenti.
-            if grep -qE '^(\.github/scripts/|src/Documentazione interna/Glossario/chapter/termini\.tex$)' <<<"$changed"; then
-              compile_all=true
-            fi
           fi
 
           : > roots.list
@@ -99,15 +92,6 @@ jobs:
 
           echo "Documenti da compilare: $count"
           echo "count=$count" >> "$GITHUB_OUTPUT"
-
-      # Aggiorna .github/scripts/termini.txt a partire dal Glossario e marca i termini nei
-      # documenti da compilare (verbali esclusi). Le modifiche ai sorgenti servono solo
-      # per questa compilazione e vengono annullate prima del commit.
-      - name: Marcatura dei termini del glossario
-        if: steps.detect.outputs.count != '0'
-        run: |
-          python3 .github/scripts/glossario.py --roots roots.list \
-            --url "https://13oolean-documentazione.vercel.app/documenti/Documentazione%20interna/Glossario/glossario.pdf"
 
       - name: Download dell'immagine TeX Live
         if: steps.detect.outputs.count != '0'
@@ -240,10 +224,7 @@ jobs:
           git config user.name "${APP_SLUG}[bot]"
           git config user.email "${BOT_ID}+${APP_SLUG}[bot]@users.noreply.github.com"
 
-          # Annulla le marcature del glossario nei sorgenti: nel repository restano puliti.
-          git checkout -- src
-          # Salva i PDF e l'elenco dei termini aggiornato dallo script.
-          git add output/ .github/scripts/termini.txt
+          git add output/
 
           if ! git diff --staged --quiet; then
             git commit -m "Automated PDF update from GitHub Actions"
