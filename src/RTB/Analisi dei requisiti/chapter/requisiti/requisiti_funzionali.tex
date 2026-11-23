@@ -1,0 +1,129 @@
+{
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{longtable}{|>{\raggedright\arraybackslash}p{1.8cm}|>{\raggedright\arraybackslash}p{2.3cm}|>{\raggedright\arraybackslash}p{6.6cm}|>{\raggedright\arraybackslash}p{3.1cm}|}
+    \caption{Requisiti funzionali}\label{tab:req-funzionali}\\
+    \hline
+    \rowcolor[gray]{0.88} \textbf{Codice} & \textbf{Importanza} & \textbf{Descrizione} & \textbf{Fonti} \\ \hline
+    \endfirsthead
+    \hline
+    \rowcolor[gray]{0.88} \textbf{Codice} & \textbf{Importanza} & \textbf{Descrizione} & \textbf{Fonti} \\ \hline
+    \endhead
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 1 --- Acquisizione delle richieste dai canali}} \\ \hline
+    \mbox{R1-F-O} & Obbligatorio & Il sistema deve monitorare in modo continuo ciascuna casella di posta elettronica configurata e acquisire mittente, oggetto, testo e allegati dei nuovi messaggi. & \mbox{Capitolato}, \mbox{VE-1.10}, \mbox{LG-1.1} \\ \hline
+    \mbox{R2-F-O} & Obbligatorio & Il sistema deve acquisire gli allegati in formato PDF e immagine delle e-mail in ingresso, associandoli alla richiesta. & \mbox{Capitolato}, \mbox{LG-1.1} \\ \hline
+    \mbox{R3-F-O} & Obbligatorio & Il sistema deve scartare l'allegato in formato non supportato o non leggibile, registrando l'anomalia nei log, e proseguire l'elaborazione con il testo del messaggio; la richiesta è marcata come non riuscita solo se non resta contenuto elaborabile. & \mbox{Analisi del dominio}, \mbox{LG-4.2} \\ \hline
+    \mbox{R4-F-O} & Obbligatorio & Il sistema deve monitorare in modo continuo ciascun canale WhatsApp configurato e acquisire numero del mittente e messaggi vocali. & \mbox{Capitolato}, \mbox{VE-1.10}, \mbox{LG-1.1} \\ \hline
+    \mbox{R5-F-D} & Desiderabile & Il sistema dovrebbe acquisire dal canale WhatsApp anche i messaggi testuali e le immagini. & \mbox{Capitolato}, \mbox{LG-1.1} \\ \hline
+    \mbox{R6-F-D} & Desiderabile & Il sistema dovrebbe monitorare una cartella del filesystem, locale o remota, acquisendo come richieste i nuovi file in essa depositati. & \mbox{Capitolato}, \mbox{VE-1.1}, \mbox{LG-1.1} \\ \hline
+    \mbox{R7-F-O} & Obbligatorio & Il sistema deve registrare nei log gli errori di accesso ai canali e riprendere il monitoraggio al ciclo successivo, senza perdere le richieste già acquisite. & \mbox{Analisi del dominio} \\ \hline
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 2 --- Filtro di sicurezza in ingresso}} \\ \hline
+    \mbox{R8-F-O} & Obbligatorio & Il sistema deve identificare il mittente di ogni richiesta tramite indirizzo e-mail o numero di telefono, confrontandolo con l'anagrafica fornita dall'azienda. & \mbox{Capitolato}, \mbox{VE-1.4}, \mbox{VE-1.5}, \mbox{LG-3.1} \\ \hline
+    \mbox{R9-F-O} & Obbligatorio & Il sistema deve bloccare le richieste provenienti da mittenti non autenticati, ovvero non presenti in anagrafica, registrando l'evento nei log. & \mbox{VE-1.4}, \mbox{VE-1.5}, \mbox{LG-3.1} \\ \hline
+    \mbox{R10-F-O} & Obbligatorio & Il sistema deve verificare che il tenant del mittente sia autorizzato prima di consentire l'elaborazione della richiesta. & \mbox{VE-1.4}, \mbox{LG-3.1} \\ \hline
+    \mbox{R11-F-O} & Obbligatorio & Il sistema deve bloccare le richieste provenienti da tenant non autorizzati, registrando l'evento nei log. & \mbox{VE-1.4}, \mbox{LG-3.1} \\ \hline
+    \mbox{R12-F-O} & Obbligatorio & Il sistema deve separare in modo rigoroso i dati di ciascun tenant, impedendo l'accesso non autorizzato e la commistione di informazioni tra tenant diversi. & \mbox{Capitolato}, \mbox{VE-1.4}, \mbox{LG-3.2} \\ \hline
+    \mbox{R13-F-O} & Obbligatorio & Il sistema deve applicare un controllo anti-spam alle e-mail in ingresso e scartare quelle classificate come spam, registrando l'evento nei log. & \mbox{VE-1.4}, \mbox{LG-3.1} \\ \hline
+    \mbox{R14-F-O} & Obbligatorio & Il sistema deve considerare duplicata una richiesta con lo stesso identificativo di messaggio (Message-ID per le e-mail, ID del messaggio per WhatsApp) di una richiesta già acquisita, e scartarla registrando l'evento nei log. & \mbox{LG-3.1} \\ \hline
+    \mbox{R15-F-O} & Obbligatorio & Il sistema deve anonimizzare nomi, indirizzi e-mail, numeri di telefono e indirizzi presenti nel testo prima di inviarlo al servizio LLM, ripristinando i valori originali nei dati inoltrati all'applicativo di destinazione. & \mbox{VE-1.4} \\ \hline
+    \mbox{R16-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta per cui l'anonimizzazione non si completa correttamente, registrando l'errore nei log. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R17-F-O} & Obbligatorio & Il sistema deve aggiornare l'anagrafica clienti pre-censita tramite elaborazione batch dei dati forniti dall'azienda. & \mbox{VE-1.4}, \mbox{VE-1.5}, \mbox{LG-3.1} \\ \hline
+    \mbox{R18-F-O} & Obbligatorio & Il sistema deve segnalare gli errori di formato o di contenuto nell'aggiornamento dell'anagrafica, senza alterare l'anagrafica esistente. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R19-F-D} & Desiderabile & Il sistema dovrebbe permettere la consultazione dell'anagrafica clienti caricata. & \mbox{Analisi del dominio} \\ \hline
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 3 --- Estrazione dei dati multimodale}} \\ \hline
+    \mbox{R20-F-O} & Obbligatorio & Il sistema deve trascrivere in testo i messaggi vocali WhatsApp, di durata nell'ordine dei secondi, tramite un modello speech-to-text. & \mbox{Capitolato}, \mbox{VE-1.10}, \mbox{LG-1.1} \\ \hline
+    \mbox{R21-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta la cui trascrizione audio fallisce o non è intelligibile, registrando l'anomalia nei log. & \mbox{Analisi del dominio}, \mbox{LG-4.2} \\ \hline
+    \mbox{R22-F-O} & Obbligatorio & Il sistema deve estrarre il testo dalle immagini allegate alle e-mail e dai documenti scansionati tramite OCR e visione artificiale. & \mbox{Capitolato}, \mbox{VE-1.2}, \mbox{LG-1.1} \\ \hline
+    \mbox{R23-F-D} & Desiderabile & Il sistema dovrebbe estrarre il testo da fotografie ricevute come messaggi autonomi, ad esempio tramite WhatsApp. & \mbox{Capitolato}, \mbox{LG-1.1} \\ \hline
+    \mbox{R24-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta per cui l'estrazione OCR fallisce, registrando l'anomalia nei log. & \mbox{Analisi del dominio}, \mbox{LG-4.2} \\ \hline
+    \mbox{R25-F-O} & Obbligatorio & Il sistema deve estrarre il testo dagli allegati PDF, ricorrendo all'OCR quando il documento è una scansione. & \mbox{Capitolato}, \mbox{VE-1.1}, \mbox{LG-1.1} \\ \hline
+    \mbox{R26-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta con PDF corrotto, protetto o non leggibile, registrando l'anomalia nei log. & \mbox{Analisi del dominio}, \mbox{LG-4.2} \\ \hline
+    \mbox{R27-F-O} & Obbligatorio & Il sistema deve strutturare l'estrazione in più fasi, inviando i dati ottenuti da OCR a un LLM per migliorare la scansione o completare un'estrazione incompleta. & \mbox{Capitolato}, \mbox{VE-1.2} \\ \hline
+    \mbox{R28-F-O} & Obbligatorio & Il sistema deve gestire gli errori del servizio LLM nel raffinamento dell'estrazione, mantenendo i dati dell'estrazione iniziale e registrando l'errore nei log. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R29-F-O} & Obbligatorio & Il sistema deve valutare l'affidabilità dei dati estratti confrontandola con una soglia di confidenza parametrizzabile. & \mbox{VE-1.6}, \mbox{LG-4.2} \\ \hline
+    \mbox{R30-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta con dati sotto la soglia di confidenza o insufficienti, registrando nei log lo specifico elemento non estratto. & \mbox{VE-1.6}, \mbox{LG-4.1}, \mbox{LG-4.2} \\ \hline
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 4 --- Elaborazione semantica e strutturazione}} \\ \hline
+    \mbox{R31-F-O} & Obbligatorio & Il sistema deve identificare, tramite LLM, l'intenzione principale di ogni messaggio o documento, dando priorità assoluta agli ordini d'acquisto B2B. & \mbox{Capitolato}, \mbox{LG-1.2} \\ \hline
+    \mbox{R32-F-O} & Obbligatorio & Il sistema deve gestire gli errori del servizio LLM nella classificazione, registrandoli nei log e riprogrammando l'elaborazione fino a un numero massimo di tentativi configurabile, oltre il quale la richiesta è marcata come non riuscita. & \mbox{Analisi del dominio}, \mbox{VE-1.9} \\ \hline
+    \mbox{R33-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta la cui intenzione principale non è determinabile o non è supportata, registrando l'evento nei log. & \mbox{LG-1.2}, \mbox{LG-4.2} \\ \hline
+    \mbox{R34-F-O} & Obbligatorio & Il sistema deve elaborare una sola intenzione principale per ciascun messaggio o documento, tracciando nei log le informazioni secondarie o escluse. & \mbox{LG-1.2} \\ \hline
+    \mbox{R35-F-O} & Obbligatorio & Il sistema deve estrarre, tramite LLM, le entità di un ordine d'acquisto: codici articolo, quantità, dati cliente e dati di spedizione. & \mbox{Capitolato}, \mbox{LG-1.2} \\ \hline
+    \mbox{R36-F-O} & Obbligatorio & Il sistema deve gestire gli errori del servizio LLM nell'estrazione delle entità, registrandoli nei log e riprogrammando l'elaborazione fino a un numero massimo di tentativi configurabile, oltre il quale la richiesta è marcata come non riuscita. & \mbox{Analisi del dominio}, \mbox{VE-1.9} \\ \hline
+    \mbox{R37-F-O} & Obbligatorio & Il sistema deve organizzare i dati di un ordine in un template JSON strutturato, definito come estensione delle API dei software aziendali, e validarlo rispetto allo schema. & \mbox{Capitolato}, \mbox{VE-1.3}, \mbox{LG-2.3} \\ \hline
+    \mbox{R38-F-D} & Desiderabile & Il sistema dovrebbe disporre di template JSON per le ulteriori tipologie di richiesta: ticket di assistenza, appuntamento, opportunità commerciale, documento contabile. & \mbox{Capitolato}, \mbox{VE-1.3} \\ \hline
+    \mbox{R39-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta il cui payload non supera la validazione dello schema, registrando nei log i campi non conformi. & \mbox{Analisi del dominio}, \mbox{LG-4.2} \\ \hline
+    \mbox{R40-F-O} & Obbligatorio & Il sistema deve rilevare le informazioni mancanti imputabili al mittente, ad esempio la quantità non specificata, senza inoltrare automaticamente la richiesta e marcandola come non riuscita. & \mbox{VE-1.6}, \mbox{LG-4.1} \\ \hline
+    \mbox{R41-F-O} & Obbligatorio & Il sistema deve dare priorità al testo del messaggio, scartando l'allegato, quando una richiesta contiene dati di acquisto sia nel testo sia in allegato. & \mbox{VE-1.7} \\ \hline
+    \mbox{R42-F-O} & Obbligatorio & Il sistema deve registrare nei log le discrepanze di dati riscontrate tra il testo del messaggio e il documento allegato. & \mbox{VE-1.7} \\ \hline
+    \mbox{R43-F-Op} & Opzionale & Il sistema può scomporre un messaggio contenente più richieste distinte in richieste indipendenti, tracciando il messaggio di origine. & \mbox{VE-1.7}, \mbox{LG-1.2} \\ \hline
+    \mbox{R44-F-D} & Desiderabile & Il sistema dovrebbe mappare, tramite LLM, le descrizioni informali degli articoli sui codici articolo del catalogo, senza verificare l'esistenza dell'articolo, compito del software aziendale. & \mbox{Capitolato}, \mbox{VE-1.5}, \mbox{LG-1.2} \\ \hline
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 5 --- Azioni, integrazione e gestione delle anomalie}} \\ \hline
+    \mbox{R45-F-O} & Obbligatorio & Il sistema deve avviare automaticamente azioni di notifica ed esecuzione in base all'entità rilevata dall'IA, secondo regole configurabili. & \mbox{Capitolato} \\ \hline
+    \mbox{R46-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita la richiesta per cui non esiste alcuna regola applicabile, registrando l'evento nei log. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R47-F-O} & Obbligatorio & Il sistema deve inoltrare i dati strutturati agli applicativi aziendali di destinazione tramite chiamate a servizi API REST. & \mbox{Capitolato}, \mbox{VE-1.1}, \mbox{VE-1.3}, \mbox{LG-2.3} \\ \hline
+    \mbox{R48-F-O} & Obbligatorio & Il sistema deve gestire gli errori di invocazione delle API REST, registrandoli nei log e impostando la richiesta in stato di inoltro fallito. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R49-F-O} & Obbligatorio & Il sistema deve creare automaticamente l'ordine d'acquisto sul portale B2B a partire da una richiesta di ordine validata, senza intervento umano. & \mbox{Capitolato}, \mbox{VE-1.1}, \mbox{LG-1.2} \\ \hline
+    \mbox{R50-F-D} & Desiderabile & Il sistema dovrebbe aprire automaticamente un ticket di assistenza nell'applicativo di ticketing a partire da una richiesta di assistenza. & \mbox{Capitolato} \\ \hline
+    \mbox{R51-F-D} & Desiderabile & Il sistema dovrebbe registrare automaticamente un appuntamento nell'applicativo di destinazione a partire da una richiesta di prenotazione. & \mbox{Capitolato} \\ \hline
+    \mbox{R52-F-D} & Desiderabile & Il sistema dovrebbe registrare automaticamente un'opportunità commerciale nel CRM a partire da una segnalazione. & \mbox{Capitolato} \\ \hline
+    \mbox{R53-F-D} & Desiderabile & Il sistema dovrebbe inoltrare all'ERP le richieste di documenti contabili o di fatturazione tramite API REST. & \mbox{Capitolato} \\ \hline
+    \mbox{R54-F-O} & Obbligatorio & Il sistema deve inviare automaticamente e-mail di notifica in base alle regole configurate. & \mbox{Capitolato} \\ \hline
+    \mbox{R55-F-O} & Obbligatorio & Il sistema deve gestire gli errori di invio delle e-mail, registrandoli nei log e ritentando l'invio fino a un numero massimo di tentativi configurabile. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R56-F-O} & Obbligatorio & Il sistema deve marcare come non riuscita ogni richiesta che non può essere elaborata con sufficiente affidabilità, registrando nei log il motivo e lo specifico elemento problematico. & \mbox{VE-1.6}, \mbox{LG-4.2} \\ \hline
+    \mbox{R57-F-O} & Obbligatorio & Il sistema deve persistere in un database relazionale interno il testo estratto, il payload JSON generato e lo stato di avanzamento di ogni richiesta. & \mbox{Capitolato}, \mbox{VE-1.12} \\ \hline
+    \mbox{R58-F-O} & Obbligatorio & Il sistema deve gestire gli errori di persistenza, registrandoli e ritentando il salvataggio fino a un numero massimo di tentativi configurabile, oltre il quale la richiesta è marcata come non riuscita. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R59-F-O} & Obbligatorio & Il sistema deve cifrare i file originali allegati alle richieste (PDF, immagini, file audio) salvati su disco, rendendoli utilizzabili per l'inoltro al software B2B e a fini di debugging. & \mbox{VE-1.12}, \mbox{LG-3.2} \\ \hline
+    \mbox{R60-F-O} & Obbligatorio & Il sistema deve registrare nei log gli eventi della pipeline (esiti, anomalie, azioni eseguite) per ogni richiesta. & \mbox{Capitolato}, \mbox{VE-1.7}, \mbox{LG-4.2} \\ \hline
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 6 --- Interfaccia amministrativa e profili di accesso}} \\ \hline
+    \mbox{R61-F-O} & Obbligatorio & Il sistema deve consentire l'accesso all'interfaccia amministrativa solo a utenti autenticati. & \mbox{LG-3.3} \\ \hline
+    \mbox{R62-F-O} & Obbligatorio & Il sistema deve segnalare il fallimento dell'autenticazione all'utente. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R63-F-O} & Obbligatorio & Il sistema deve permettere all'utente autenticato di terminare la propria sessione (logout). & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R64-F-O} & Obbligatorio & Il sistema deve prevedere tre profili di accesso distinti: Amministratore, Gestore e Utente in sola lettura. & \mbox{LG-3.3} \\ \hline
+    \mbox{R65-F-O} & Obbligatorio & Il sistema deve limitare le funzionalità disponibili a ciascun utente in base al proprio profilo di accesso. & \mbox{LG-3.3} \\ \hline
+    \mbox{R66-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di creare un utente e assegnargli un profilo di accesso. & \mbox{LG-3.3} \\ \hline
+    \mbox{R67-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di modificare il profilo di accesso di un utente. & \mbox{LG-3.3} \\ \hline
+    \mbox{R68-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di rimuovere un utente. & \mbox{LG-3.3} \\ \hline
+    \mbox{R69-F-O} & Obbligatorio & Il sistema deve segnalare gli errori nella gestione degli utenti, quali identificativo già esistente o profilo non valido. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R70-F-O} & Obbligatorio & Il sistema deve permettere di visualizzare i canali di ingresso configurati e il loro stato. & \mbox{Capitolato} \\ \hline
+    \mbox{R71-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di configurare un nuovo canale di ingresso. & \mbox{Capitolato} \\ \hline
+    \mbox{R72-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di modificare i parametri di un canale di ingresso. & \mbox{Capitolato} \\ \hline
+    \mbox{R73-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di rimuovere un canale di ingresso. & \mbox{Capitolato} \\ \hline
+    \mbox{R74-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di attivare e disattivare un canale di ingresso. & \mbox{Capitolato} \\ \hline
+    \mbox{R75-F-O} & Obbligatorio & Il sistema deve segnalare gli errori di validazione dei parametri di configurazione, senza salvare la configurazione. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R76-F-O} & Obbligatorio & Il sistema deve permettere di visualizzare le regole di azione e notifica configurate. & \mbox{Capitolato} \\ \hline
+    \mbox{R77-F-O} & Obbligatorio & Il sistema deve permettere al Gestore di creare regole che associano a una tipologia di richiesta un'azione di tipo API REST oppure e-mail. & \mbox{Capitolato} \\ \hline
+    \mbox{R78-F-O} & Obbligatorio & Il sistema deve permettere al Gestore di modificare una regola di azione o notifica. & \mbox{Capitolato} \\ \hline
+    \mbox{R79-F-O} & Obbligatorio & Il sistema deve permettere al Gestore di eliminare una regola di azione o notifica. & \mbox{Capitolato} \\ \hline
+    \mbox{R80-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di configurare gli applicativi aziendali di destinazione (indirizzo dell'API, credenziali, tipo). & \mbox{Capitolato}, \mbox{VE-1.1} \\ \hline
+    \mbox{R81-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di configurare e sostituire il modello LLM, indicando endpoint compatibile con lo standard OpenAI e nome del modello. & \mbox{VE-1.8}, \mbox{LG-2.2} \\ \hline
+    \mbox{R82-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di configurare i parametri del servizio di posta in uscita. & \mbox{Capitolato} \\ \hline
+    \mbox{R83-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di impostare il valore della soglia di confidenza. & \mbox{LG-4.2} \\ \hline
+    \mbox{R84-F-O} & Obbligatorio & Il sistema deve permettere di consultare lo storico dei log tramite la dashboard di monitoraggio dell'interfaccia amministrativa. & \mbox{Capitolato}, \mbox{LG-4.2} \\ \hline
+    \mbox{R85-F-O} & Obbligatorio & Il sistema deve segnalare gli errori nel recupero dello storico dei log. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R86-F-D} & Desiderabile & Il sistema dovrebbe permettere di filtrare lo storico dei log per periodo, canale, tenant, tipologia ed esito. & \mbox{Analisi del dominio}, \mbox{Capitolato} \\ \hline
+    \mbox{R87-F-O} & Obbligatorio & Il sistema deve permettere di consultare le richieste persistite e il loro stato di avanzamento, incluse quelle marcate come non riuscite. & \mbox{Capitolato}, \mbox{VE-1.12}, \mbox{LG-4.2} \\ \hline
+    \mbox{R88-F-O} & Obbligatorio & Il sistema deve permettere di visualizzare il dettaglio di una richiesta: testo estratto, payload, stato, azioni eseguite e anomalie registrate. & \mbox{Capitolato}, \mbox{VE-1.12} \\ \hline
+    \mbox{R89-F-D} & Desiderabile & Il sistema dovrebbe permettere di consultare gli allegati originali conservati, a fini di verifica e debugging. & \mbox{VE-1.12} \\ \hline
+    \mbox{R90-F-D} & Desiderabile & Il sistema dovrebbe permettere al Gestore di ritentare l'inoltro di una richiesta in stato di inoltro fallito. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R91-F-O} & Obbligatorio & Il sistema deve permettere all'Amministratore di gestire la persistenza locale dei dati, eliminando le richieste persistite. & \mbox{Capitolato} \\ \hline
+    \mbox{R92-F-O} & Obbligatorio & Il sistema deve segnalare gli errori nell'eliminazione dei dati persistiti. & \mbox{Analisi del dominio} \\ \hline
+    \multicolumn{4}{|l|}{\cellcolor[gray]{0.94}\textbf{Macroarea 7 --- Funzionalità opzionali ed estensioni}} \\ \hline
+    \mbox{R93-F-Op} & Opzionale & Il sistema può instradare una richiesta non riuscita in una coda di revisione umana, indicandone motivo ed elemento problematico, in alternativa alla sola marcatura come non riuscita. & \mbox{VE-1.6}, \mbox{LG-4.1} \\ \hline
+    \mbox{R94-F-Op} & Opzionale & Il sistema può permettere di visualizzare la coda delle richieste in revisione umana. & \mbox{VE-1.6}, \mbox{LG-4.1} \\ \hline
+    \mbox{R95-F-Op} & Opzionale & Il sistema può mostrare, per ogni richiesta in revisione, il motivo dell'anomalia e lo specifico elemento segnalato. & \mbox{VE-1.6} \\ \hline
+    \mbox{R96-F-Op} & Opzionale & Il sistema può permettere di correggere o completare i dati di una richiesta in revisione. & \mbox{VE-1.6} \\ \hline
+    \mbox{R97-F-Op} & Opzionale & Il sistema può permettere di approvare una richiesta revisionata, avviandone l'inoltro automatico. & \mbox{VE-1.6} \\ \hline
+    \mbox{R98-F-Op} & Opzionale & Il sistema può permettere di scartare una richiesta in revisione, tracciandone il motivo. & \mbox{VE-1.6} \\ \hline
+    \mbox{R99-F-Op} & Opzionale & Il sistema può offrire una dashboard analitica per la visualizzazione sintetica dei flussi di lavoro. & \mbox{Capitolato} \\ \hline
+    \mbox{R100-F-Op} & Opzionale & Il sistema può mostrare nella dashboard analitica lo stato delle notifiche. & \mbox{Capitolato} \\ \hline
+    \mbox{R101-F-Op} & Opzionale & Il sistema può mostrare nella dashboard analitica le azioni eseguite verso gli applicativi. & \mbox{Capitolato} \\ \hline
+    \mbox{R102-F-Op} & Opzionale & Il sistema può segnalare gli errori di caricamento della dashboard analitica. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R103-F-Op} & Opzionale & Il sistema può inviare autonomamente al mittente un messaggio di conferma di ricezione, tramite e-mail o messaggio in base al canale utilizzato. & \mbox{Capitolato} \\ \hline
+    \mbox{R104-F-Op} & Opzionale & Il sistema può inviare autonomamente al mittente un messaggio in caso di errore nella ricezione della richiesta. & \mbox{Capitolato} \\ \hline
+    \mbox{R105-F-Op} & Opzionale & Il sistema può registrare nei log gli errori di invio delle risposte al mittente. & \mbox{Analisi del dominio} \\ \hline
+    \mbox{R106-F-Op} & Opzionale & Il sistema può contattare direttamente il mittente via e-mail quando la mancanza di informazioni è imputabile a un suo errore. & \mbox{VE-1.6} \\ \hline
+    \mbox{R107-F-Op} & Opzionale & Il sistema può acquisire registrazioni vocali e trascrizioni di meeting con il cliente. & \mbox{Capitolato}, \mbox{VE-1.10}, \mbox{LG-1.1} \\ \hline
+    \mbox{R108-F-Op} & Opzionale & Il sistema può estrarre dai meeting, tramite contestualizzazione complessiva, ordini, ticket e richieste di assistenza. & \mbox{Capitolato}, \mbox{VE-1.10}, \mbox{LG-1.1} \\ \hline
+    \mbox{R109-F-Op} & Opzionale & Il sistema può registrare nei log gli errori di acquisizione e di elaborazione dei meeting. & \mbox{Analisi del dominio} \\ \hline
+    \end{longtable}
+}

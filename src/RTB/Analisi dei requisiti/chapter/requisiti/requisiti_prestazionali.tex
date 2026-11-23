@@ -1,0 +1,16 @@
+{
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{longtable}{|>{\raggedright\arraybackslash}p{1.8cm}|>{\raggedright\arraybackslash}p{2.3cm}|>{\raggedright\arraybackslash}p{6.6cm}|>{\raggedright\arraybackslash}p{3.1cm}|}
+    \caption{Requisiti prestazionali}\label{tab:req-prestazionali}\\
+    \hline
+    \rowcolor[gray]{0.88} \textbf{Codice} & \textbf{Importanza} & \textbf{Descrizione} & \textbf{Fonti} \\ \hline
+    \endfirsthead
+    \hline
+    \rowcolor[gray]{0.88} \textbf{Codice} & \textbf{Importanza} & \textbf{Descrizione} & \textbf{Fonti} \\ \hline
+    \endhead
+    \mbox{R1-P-O} & Obbligatorio & Il sistema deve gestire in modo asincrono almeno 100 richieste concorrenti & \mbox{VE-1.9} \\ \hline
+    \mbox{R2-P-O} & Obbligatorio & Il sistema deve tollerare tempi di elaborazione di minuti, mezz'ora o più ore per singola richiesta, senza perdere né scartare richieste. & \mbox{VE-1.9} \\ \hline
+    \mbox{R3-P-O} & Obbligatorio & Il sistema deve elaborare messaggi vocali WhatsApp di durata nell'ordine dei secondi. & \mbox{VE-1.10} \\ \hline
+    \end{longtable}
+}

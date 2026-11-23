@@ -1,0 +1,15 @@
+\subsection{Attori}
+Gli attori individuati sono distinti in primari, che avviano l'interazione con il sistema, e secondari, ovvero sistemi esterni che forniscono o ricevono servizi dal sistema.
+
+\begin{itemize}
+    \item \textbf{Mittente}: attore primario. Rappresenta il cliente B2B, identificato tramite anagrafica, che invia richieste non strutturate attraverso i canali monitorati. Il sistema opera in modo autonomo: le fasi della pipeline sono quindi modellate come casi d'uso innescati dalla richiesta del mittente, che non interagisce direttamente con l'interfaccia (VE-1.1, VE-1.4, LG-1.1).
+    \item \textbf{Utente non autenticato}: attore primario. Chiunque acceda all'interfaccia amministrativa senza essersi ancora autenticato; dopo l'autenticazione assume il ruolo di Utente in sola lettura, Gestore o Amministratore in base al proprio profilo.
+    \item \textbf{Utente in sola lettura}: attore primario. Utente dell'interfaccia amministrativa che consulta richieste, log e dashboard di monitoraggio, senza poter modificare la configurazione o i dati (LG-3.3, LG-4.2).
+    \item \textbf{Gestore}: attore primario. Utente dell'interfaccia amministrativa che, oltre alle funzionalità dell'Utente in sola lettura, gestisce le regole di azione e notifica e le richieste non riuscite (LG-3.3).
+    \item \textbf{Amministratore}: attore primario. Utente dell'interfaccia amministrativa che, oltre alle funzionalità del Gestore, configura canali, applicativi di destinazione, modello LLM, posta in uscita e soglia di confidenza, gestisce anagrafica, utenti e profili e la persistenza dei dati (LG-3.3).
+    \item \textbf{Canale di ingresso}: attore secondario (sistema esterno). Sorgente da cui il sistema acquisisce le richieste: casella di posta elettronica, canale WhatsApp o, come funzionalità desiderabile, cartella del filesystem, locale o remota (VE-1.1, LG-1.1).
+    \item \textbf{Motore di estrazione (OCR / Speech-to-Text)}: attore secondario (sistema esterno). Componente che converte in testo audio, immagini e documenti scansionati, ad esempio Whisper, Google Speech, Tesseract o EasyOCR (VE-1.2, LG-1.1).
+    \item \textbf{LLM}: attore secondario (sistema esterno). Fornisce i servizi di raffinamento dell'estrazione, individuazione dell'intenzione, estrazione delle entità e strutturazione dei dati tramite interfaccia compatibile con le API di OpenAI; è un modello a pesi aperti eseguito in locale, ad esempio Qwen (VE-1.8, LG-2.1, LG-2.2).
+    \item \textbf{Applicativo aziendale di destinazione}: attore secondario (sistema esterno). Portale B2B, ERP, CRM o sistema di ticketing che riceve i dati strutturati tramite API REST; in fase di sviluppo la proponente fornisce mock e API dedicate (VE-1.1, LG-2.3).
+    \item \textbf{Servizio di posta in uscita}: attore secondario (sistema esterno). Servizio SMTP utilizzato per l'invio di notifiche e messaggi al mittente (Capitolato).
+\end{itemize}
