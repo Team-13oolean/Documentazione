@@ -1,6 +1,6 @@
 # Elenco dei casi d'uso — AIRA (13oolean)
 
-**122 casi d'uso** (70 di primo livello, 52 sotto-UC), di cui 85 obbligatori, 19 desiderabili e 18 opzionali. Ogni UC ha il proprio diagramma UML nello zip (`uml_uc/`), più `Attori.png` con la gerarchia degli attori.
+**122 casi d'uso** (70 di primo livello, 52 sotto-UC), di cui 85 obbligatori, 19 desiderabili e 18 opzionali. Ogni UC ha il proprio diagramma UML nella cartella `img/`, più `Attori.png` con la gerarchia degli attori.
 
 **Convenzioni**
 - Numerazione gerarchica come nel documento di riferimento: `UC N.k` è un sotto-UC di `UC N` (estensione, tipicamente un errore, oppure inclusione); `UC N.k.m` è un sotto-UC di `UC N.k`.
